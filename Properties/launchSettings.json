@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Portfolio4": {
+      "commandName": "Project",
+      "commandLineArgs": "-e --path \"C:\\Users\\Denise\\Documents\\projects\\Portfolio4\"",
+      "workingDirectory": "${ProjectDir}"
+    },
+    "Godot": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\Denise\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine.Mono_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.3-stable_mono_win64\\Godot_v4.3-stable_mono_win64_console.exe",
+      "commandLineArgs": "--path.--verbose",
+      "workingDirectory": ".",
+      "nativeDebugging": true
+    }
+  }
+}
