@@ -1,20 +1,31 @@
 using Godot;
 using System;
+using System.Diagnostics;
 
 public partial class Player : CharacterBody3D
 {
-    public const float Speed = 5.0f;
     public const float JumpVelocity = 4.5f;
 
     [Export] public float _lookSenitivity = 2.0f;
+    [Export] private float _runSpeed = 5.0f;
+    [Export] private float _walkSpeed = 3.0f;
     [Export] private Node3D _cameraMount = null;
+    [Export] private Node3D _vfx = null;
     [Export] private AnimationPlayer _animationPlayer = null;
 
+    private float _currentSpeed = 0.0f;
+    private bool _isRunning = false;
+    private bool _isLocked = false;
 
     public override void _Ready()
     {
         Input.MouseMode = Input.MouseModeEnum.Captured;
         _lookSenitivity *= 0.1f;
+
+        //_animationPlayer.AnimationFinished += (animName) => 
+        //{
+        //    _isLocked = !(animName == "kick");
+        //};
     }
 
     public override void _Input(InputEvent inputEvent)
@@ -22,9 +33,12 @@ public partial class Player : CharacterBody3D
 
         if (inputEvent is InputEventMouseMotion)
         {
+
             InputEventMouseMotion inputEventMouseMotion = (InputEventMouseMotion)inputEvent;
-            float radiansY = Mathf.Pi * 0.00555f * -inputEventMouseMotion.Relative.X * _lookSenitivity;
-            RotateY(radiansY);
+            float radiansY = Mathf.Pi * 0.00555f * inputEventMouseMotion.Relative.X * _lookSenitivity;
+            RotateY(-radiansY);
+
+            _vfx.RotateY(radiansY);
 
             float radiansX = Mathf.Pi * 0.00555f * -inputEventMouseMotion.Relative.Y * _lookSenitivity;
             _cameraMount.RotateX(radiansX);
@@ -37,6 +51,22 @@ public partial class Player : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
+        if (!_animationPlayer.IsPlaying())
+        {
+            _isLocked = false;
+        }
+
+        _isRunning = Input.IsActionPressed("sprint");
+        _currentSpeed = _isRunning ? _runSpeed : _walkSpeed;
+
+        if (Input.IsActionJustPressed("kick"))
+        {
+            if (_animationPlayer.CurrentAnimation != "kick")
+                _animationPlayer.Play("kick");
+
+            _isLocked = true;
+        }
+
         Vector3 velocity = Velocity;
 
         // Add the gravity.
@@ -57,23 +87,39 @@ public partial class Player : CharacterBody3D
         Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
         if (direction != Vector3.Zero)
         {
-            if (_animationPlayer.CurrentAnimation != "walking")
-                _animationPlayer.Play("walking");
+            if (!_isLocked)
+            {
+                if (_isRunning)
+                {
+                    if (_animationPlayer.CurrentAnimation != "running")
+                        _animationPlayer.Play("running");
+                }
+                else
+                {
+                    if (_animationPlayer.CurrentAnimation != "walking")
+                        _animationPlayer.Play("walking");
+                }
 
+                _vfx.LookAt(Position - direction);
 
-            velocity.X = direction.X * Speed;
-            velocity.Z = direction.Z * Speed;
+                velocity.X = direction.X * _currentSpeed;
+                velocity.Z = direction.Z * _currentSpeed;
+            }
         }
         else
         {
             if (_animationPlayer.CurrentAnimation != "idle")
                 _animationPlayer.Play("idle");
 
-            velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-            velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
+            velocity.X = Mathf.MoveToward(Velocity.X, 0, _currentSpeed);
+            velocity.Z = Mathf.MoveToward(Velocity.Z, 0, _currentSpeed);
         }
 
         Velocity = velocity;
-        MoveAndSlide();
+
+        if (!_isLocked)
+        {
+            MoveAndSlide();
+        }
     }
 }
