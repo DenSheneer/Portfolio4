@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ct6c6ctstlg24"]
+[gd_scene load_steps=22 format=3 uid="uid://ct6c6ctstlg24"]
 
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_8a6eb"]
 [ext_resource type="Texture2D" uid="uid://c8arnlq67qi7" path="res://assets/Textures/grids/Dark/texture_05.png" id="1_wfx2i"]
@@ -8,7 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://bf0wmidaqvauv" path="res://Scenes/npc.tscn" id="6_d63wp"]
 [ext_resource type="PackedScene" uid="uid://7hfxvaeery4r" path="res://Scenes/point_of_interest.tscn" id="7_gd3uj"]
 [ext_resource type="PackedScene" uid="uid://ue3shj2pl0n0" path="res://Scenes/coin.tscn" id="8_2bawt"]
+[ext_resource type="AudioStream" uid="uid://cwi4w3wvncu1v" path="res://assets/Sounds/coin.mp3" id="9_6sibd"]
+[ext_resource type="Script" path="res://Scripts/UI.cs" id="10_ghqv6"]
 [ext_resource type="Script" path="res://Scenes/CoinManager.cs" id="10_kmpbk"]
+[ext_resource type="Texture2D" uid="uid://cfouepywfyqjo" path="res://assets/Sprites/CoinSprite.png" id="10_o0t8r"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_3ymu4"]
 
@@ -46,9 +49,11 @@ uv1_triplanar = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_25lsv"]
 albedo_texture = ExtResource("6_csa2f")
 
-[node name="World" type="Node3D" node_paths=PackedStringArray("target", "_coinManager")]
+[sub_resource type="SystemFont" id="SystemFont_kc236"]
+font_names = PackedStringArray("Impact")
+
+[node name="World" type="Node3D" node_paths=PackedStringArray("_coinManager")]
 script = ExtResource("1_8a6eb")
-target = NodePath("Player")
 _coinManager = NodePath("CoinManager")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
@@ -64,21 +69,6 @@ environment = SubResource("Environment_2hb6v")
 
 [node name="Player" parent="." instance=ExtResource("5_txxwy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.95217, 0.0283022, 5.82842)
-
-[node name="NPC" parent="." instance=ExtResource("6_d63wp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.86, -0.00816798, 18.8143)
-
-[node name="NPC2" parent="." instance=ExtResource("6_d63wp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.4464, -0.00816798, 21.026)
-
-[node name="NPC3" parent="." instance=ExtResource("6_d63wp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.79754, -0.00816798, 7.90631)
-
-[node name="NPC4" parent="." instance=ExtResource("6_d63wp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.1433, -0.00816798, -14.0341)
-
-[node name="NPC5" parent="." instance=ExtResource("6_d63wp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5191, -0.00816798, -11.8375)
 
 [node name="NavigationRegion3D2" type="NavigationRegion3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.009, 0.0173414, 0.009)
@@ -280,6 +270,76 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 0.00250001, 0, 0, 0, 1, 12, 0, 13)
 skeleton = NodePath("")
 
-[node name="CoinManager" type="Node" parent="."]
+[node name="CoinManager" type="Node" parent="." node_paths=PackedStringArray("_audioStream")]
 script = ExtResource("10_kmpbk")
+_audioStream = NodePath("AudioStreamPlayer3D")
 _coinScene = ExtResource("8_2bawt")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CoinManager"]
+stream = ExtResource("9_6sibd")
+
+[node name="Enemies" type="Node3D" parent="."]
+
+[node name="NPC" parent="Enemies" instance=ExtResource("6_d63wp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.86, -0.00816798, 18.8143)
+
+[node name="NPC2" parent="Enemies" instance=ExtResource("6_d63wp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.4464, -0.00816798, 21.026)
+
+[node name="NPC3" parent="Enemies" instance=ExtResource("6_d63wp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.79754, -0.00816798, 7.90631)
+
+[node name="NPC4" parent="Enemies" instance=ExtResource("6_d63wp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.1433, -0.00816798, -14.0341)
+
+[node name="NPC5" parent="Enemies" instance=ExtResource("6_d63wp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5191, -0.00816798, -11.8375)
+
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("_coinManager", "_coinNrText")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 52.0
+offset_bottom = 52.0
+script = ExtResource("10_ghqv6")
+_coinManager = NodePath("../CoinManager")
+_coinNrText = NodePath("CoinSprite/RichTextLabel")
+
+[node name="CoinSprite" type="TextureRect" parent="UI"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 150.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_o0t8r")
+expand_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/CoinSprite"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 25.0
+offset_top = -57.0
+offset_right = 125.0
+offset_bottom = 3.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(2, 2)
+theme_override_colors/default_color = Color(0.878431, 0.619608, 0.227451, 1)
+theme_override_fonts/normal_font = SubResource("SystemFont_kc236")
+theme_override_font_sizes/bold_italics_font_size = 24
+theme_override_font_sizes/italics_font_size = 24
+theme_override_font_sizes/mono_font_size = 24
+theme_override_font_sizes/normal_font_size = 48
+theme_override_font_sizes/bold_font_size = 24
+text = "0
+"
+fit_content = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.453991, 0.891007, 0, -0.891007, 0.453991, 0, 35.042, 24.555)
+fov = 59.5

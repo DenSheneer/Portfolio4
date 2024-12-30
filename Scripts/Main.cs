@@ -1,15 +1,18 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public partial class Main : Node3D
 {
-	[Export] Node3D target;
     [Export] CoinManager _coinManager;
+    readonly PackedScene _gameoverScreen = ResourceLoader.Load<PackedScene>("res://Scenes/menu.tscn");
 
-	private List<Enemy> _enemies = new List<Enemy>();
-	private List<Point_Of_Interest> _pointsOfInterest = new List<Point_Of_Interest>();
-	public override void _Ready()
+    private List<Enemy> _enemies = new List<Enemy>();
+    private List<Point_Of_Interest> _pointsOfInterest = new List<Point_Of_Interest>();
+
+    private int score = 0;
+    public override void _Ready()
     {
         GatherPointOfInterest();
         GetAndInitializeEnemyObjects();
@@ -20,6 +23,7 @@ public partial class Main : Node3D
     {
         if (_coinManager == null) { return; }
         _coinManager.Initialize(_pointsOfInterest);
+        _coinManager.ScoreChanged += (newScore) => { score = newScore; };
     }
 
     private void GatherPointOfInterest()
@@ -44,14 +48,19 @@ public partial class Main : Node3D
                 _enemies.Add(enemy);
                 enemy.PointsOfInterest = _pointsOfInterest;
                 enemy.FindNewTarget();
-
+                enemy.OnPlayerHit += gameOver;
             }
         }
     }
 
+    private void gameOver()
+    {
+        GetTree().ChangeSceneToPacked(_gameoverScreen);
+    }
+
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
-	{
-		
-	}
+    {
+
+    }
 }

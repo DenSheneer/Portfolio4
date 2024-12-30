@@ -6,10 +6,8 @@ public partial class Player : CharacterBody3D
 {
     public const float JumpVelocity = 4.5f;
 
-    [Export] public float _lookSenitivity = 2.0f;
     [Export] private float _runSpeed = 5.0f;
     [Export] private float _walkSpeed = 3.0f;
-    [Export] private Node3D _cameraMount = null;
     [Export] private Node3D _vfx = null;
     [Export] private AnimationPlayer _animationPlayer = null;
 
@@ -19,35 +17,8 @@ public partial class Player : CharacterBody3D
 
     public override void _Ready()
     {
-        Input.MouseMode = Input.MouseModeEnum.Captured;
-        _lookSenitivity *= 0.1f;
-
-        //_animationPlayer.AnimationFinished += (animName) => 
-        //{
-        //    _isLocked = !(animName == "kick");
-        //};
+        //Input.MouseMode = Input.MouseModeEnum.Captured;
     }
-
-    public override void _Input(InputEvent inputEvent)
-    {
-
-        if (inputEvent is InputEventMouseMotion)
-        {
-
-            InputEventMouseMotion inputEventMouseMotion = (InputEventMouseMotion)inputEvent;
-            float radiansY = Mathf.Pi * 0.00555f * inputEventMouseMotion.Relative.X * _lookSenitivity;
-            RotateY(-radiansY);
-
-            _vfx.RotateY(radiansY);
-
-            float radiansX = Mathf.Pi * 0.00555f * -inputEventMouseMotion.Relative.Y * _lookSenitivity;
-            _cameraMount.RotateX(radiansX);
-            _cameraMount.RotationDegrees = new Vector3(Mathf.Clamp(_cameraMount.RotationDegrees.X, -90.0f, 90.0f), _cameraMount.RotationDegrees.Y, _cameraMount.RotationDegrees.Z);
-
-        }
-
-    }
-
 
     public override void _PhysicsProcess(double delta)
     {

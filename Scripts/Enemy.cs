@@ -12,6 +12,7 @@ public partial class Enemy : CharacterBody3D
     [Export] private NavigationAgent3D agent = null;
     [Export] private Area3D _visionArea = null;
     [Export] private RayCast3D _raycast = null;
+    [Export] private AudioStreamPlayer3D _audioPlayer = null;
 
     private List<Point_Of_Interest> _pointsOfInterest = new List<Point_Of_Interest>();
     public List<Point_Of_Interest> PointsOfInterest { set { _pointsOfInterest = value; } }
@@ -20,6 +21,8 @@ public partial class Enemy : CharacterBody3D
     private bool _isNavigating = false;
     private bool _isChasing;
     private Task _escapeTask = null;
+
+    public Action OnPlayerHit;
 
     public override void _Ready()
     {
@@ -39,6 +42,14 @@ public partial class Enemy : CharacterBody3D
         else if (_isChasing && _escapeTask == null)
         {
             _escapeTask = cancelChase();
+        }
+    }
+    public void BodyEntered(Node3D node)
+    {
+        if (node is Player)
+        {
+            _escapeTask?.Dispose();
+            OnPlayerHit?.Invoke();
         }
     }
 
@@ -71,6 +82,7 @@ public partial class Enemy : CharacterBody3D
 
     private void chasePlayer(Player player)
     {
+        _audioPlayer.Play();
         _isChasing = true;
         _chaseTarget = player;
         agent.TargetReached -= FindNewTarget;
