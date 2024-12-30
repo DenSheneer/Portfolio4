@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://7hfxvaeery4r"]
+
+[ext_resource type="Texture2D" uid="uid://svp317oq35y5" path="res://assets/Textures/grids/Red/texture_03.png" id="1_bss0c"]
+[ext_resource type="Script" path="res://Scripts/Point_Of_Interest.cs" id="2_y2fem"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcw0l"]
+albedo_texture = ExtResource("1_bss0c")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ef1ti"]
+
+[node name="PointOfInterest" type="MeshInstance3D" groups=["PointsOfInterest"]]
+transform = Transform3D(1, 0, 0, 0, -0.0500001, 0, 0, 0, 1, -4.3, 0, 13.6)
+material_override = SubResource("StandardMaterial3D_dcw0l")
+mesh = SubResource("CylinderMesh_ef1ti")
+script = ExtResource("2_y2fem")
