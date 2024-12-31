@@ -3447,7 +3447,6 @@ radius = 0.295
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_vfx", "_animationPlayer")]
 script = ExtResource("1_t8hxu")
-_runSpeed = 6.0
 _vfx = NodePath("VFX")
 _animationPlayer = NodePath("VFX/mixamo_base/AnimationPlayer")
 
