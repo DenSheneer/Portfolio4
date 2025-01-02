@@ -10942,6 +10942,7 @@ _data = {
 
 [node name="NPC" type="CharacterBody3D" node_paths=PackedStringArray("agent", "_visionArea", "_raycast", "_audioPlayer", "_animationPlayer") groups=["Enemy"]]
 script = ExtResource("1_hkltj")
+_roamSpeed = 3.0
 _chaseSpeed = 5.0
 _timeToEscape = 3.0
 agent = NodePath("NavigationAgent3D")

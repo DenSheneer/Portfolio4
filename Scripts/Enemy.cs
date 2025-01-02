@@ -66,7 +66,7 @@ public partial class Enemy : CharacterBody3D
                 if (element is Player)
                 {
                     var playerPos = element.GlobalTransform.Origin;
-                    _raycast.LookAt(playerPos, Vector3.Up);
+                    _raycast.LookAt(playerPos);
                     _raycast.ForceRaycastUpdate();
 
                     if (_raycast.IsColliding())
@@ -89,6 +89,7 @@ public partial class Enemy : CharacterBody3D
             _animationPlayer.Play("Run");
 
         _audioPlayer.Play();
+        _isNavigating = false;
         _isChasing = true;
         _chaseTarget = player;
         agent.TargetReached -= FindNewTarget;
@@ -110,6 +111,7 @@ public partial class Enemy : CharacterBody3D
 
     public async void FindNewTarget()
     {
+        _isNavigating = false;
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);   // wait 1 frame
 
         if (_animationPlayer.CurrentAnimation != "Walk")
@@ -127,8 +129,12 @@ public partial class Enemy : CharacterBody3D
     public override void _PhysicsProcess(double delta)
     {
         float speed = _roamSpeed;
-        if (!_isNavigating) { return; }
-        if (_isChasing) { agent.TargetPosition = _chaseTarget.GlobalPosition; speed = _chaseSpeed; }
+        if (!_isNavigating && !_isChasing) { return; }
+        if (_isChasing)
+        {
+            agent.TargetPosition = _chaseTarget.GlobalPosition;
+            speed = _chaseSpeed;
+        }
 
         Vector3 velocity = Velocity;
 
@@ -143,7 +149,9 @@ public partial class Enemy : CharacterBody3D
 
         velocity = velocity.MoveToward(newVelocity, 0.25f);
 
-        LookAt(nextLocation, Vector3.Up);
+        if (currentLocation.DistanceSquaredTo(nextLocation) > 0.01f)
+            LookAt(nextLocation);
+
         Velocity = velocity;
         MoveAndSlide();
     }
