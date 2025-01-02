@@ -2,17 +2,20 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 public partial class Enemy : CharacterBody3D
 {
-    [Export] private float _speed = 2.5f;
+    [Export] private float _roamSpeed = 3.5f;
+    [Export] private float _chaseSpeed = 3.5f;
     [Export] private float _gravity = 9.8f;
     [Export] private float _timeToEscape = 1.0f;
     [Export] private NavigationAgent3D agent = null;
     [Export] private Area3D _visionArea = null;
     [Export] private RayCast3D _raycast = null;
     [Export] private AudioStreamPlayer3D _audioPlayer = null;
+    [Export] private AnimationPlayer _animationPlayer = null;
 
     private List<Point_Of_Interest> _pointsOfInterest = new List<Point_Of_Interest>();
     public List<Point_Of_Interest> PointsOfInterest { set { _pointsOfInterest = value; } }
@@ -20,6 +23,7 @@ public partial class Enemy : CharacterBody3D
     private Node3D _chaseTarget = null;
     private bool _isNavigating = false;
     private bool _isChasing;
+
     private Task _escapeTask = null;
 
     public Action OnPlayerHit;
@@ -48,7 +52,6 @@ public partial class Enemy : CharacterBody3D
     {
         if (node is Player)
         {
-            _escapeTask?.Dispose();
             OnPlayerHit?.Invoke();
         }
     }
@@ -82,6 +85,9 @@ public partial class Enemy : CharacterBody3D
 
     private void chasePlayer(Player player)
     {
+        if (_animationPlayer.CurrentAnimation != "Run")
+            _animationPlayer.Play("Run");
+
         _audioPlayer.Play();
         _isChasing = true;
         _chaseTarget = player;
@@ -106,6 +112,9 @@ public partial class Enemy : CharacterBody3D
     {
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);   // wait 1 frame
 
+        if (_animationPlayer.CurrentAnimation != "Walk")
+            _animationPlayer.Play("Walk");
+
         if (_pointsOfInterest.Count > 0)
         {
             Random rnd = new Random();
@@ -117,8 +126,9 @@ public partial class Enemy : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
+        float speed = _roamSpeed;
         if (!_isNavigating) { return; }
-        if (_isChasing) { agent.TargetPosition = _chaseTarget.GlobalPosition; }
+        if (_isChasing) { agent.TargetPosition = _chaseTarget.GlobalPosition; speed = _chaseSpeed; }
 
         Vector3 velocity = Velocity;
 
@@ -129,7 +139,7 @@ public partial class Enemy : CharacterBody3D
 
         var nextLocation = agent.GetNextPathPosition();
         var currentLocation = GlobalTransform.Origin;
-        var newVelocity = (nextLocation - currentLocation).Normalized() * _speed;
+        var newVelocity = (nextLocation - currentLocation).Normalized() * speed;
 
         velocity = velocity.MoveToward(newVelocity, 0.25f);
 

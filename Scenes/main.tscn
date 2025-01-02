@@ -1,10 +1,10 @@
 [gd_scene load_steps=22 format=3 uid="uid://ct6c6ctstlg24"]
 
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_8a6eb"]
-[ext_resource type="Texture2D" uid="uid://c8arnlq67qi7" path="res://assets/Textures/grids/Dark/texture_05.png" id="1_wfx2i"]
-[ext_resource type="Texture2D" uid="uid://c8upf6osvdwx5" path="res://assets/Textures/grids/Orange/texture_05.png" id="5_jmd7v"]
+[ext_resource type="Texture2D" uid="uid://bdw2j5kejiegc" path="res://assets/textures/grids/Dark/texture_01.png" id="3_mluhh"]
+[ext_resource type="Texture2D" uid="uid://c8upf6osvdwx5" path="res://assets/textures/grids/Orange/texture_05.png" id="5_jmd7v"]
 [ext_resource type="PackedScene" uid="uid://c836vg5g8oac4" path="res://Scenes/Player.tscn" id="5_txxwy"]
-[ext_resource type="Texture2D" uid="uid://bj2tjclvfiove" path="res://assets/Textures/grids/Purple/texture_05.png" id="6_csa2f"]
+[ext_resource type="Texture2D" uid="uid://bj2tjclvfiove" path="res://assets/textures/grids/Purple/texture_05.png" id="6_csa2f"]
 [ext_resource type="PackedScene" uid="uid://bf0wmidaqvauv" path="res://Scenes/npc.tscn" id="6_d63wp"]
 [ext_resource type="PackedScene" uid="uid://7hfxvaeery4r" path="res://Scenes/point_of_interest.tscn" id="7_gd3uj"]
 [ext_resource type="PackedScene" uid="uid://ue3shj2pl0n0" path="res://Scenes/coin.tscn" id="8_2bawt"]
@@ -38,7 +38,7 @@ polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 3, 2), PackedInt32Arr
 agent_radius = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wdwdq"]
-albedo_texture = ExtResource("1_wfx2i")
+albedo_texture = ExtResource("3_mluhh")
 uv1_triplanar = true
 uv1_world_triplanar = true
 
@@ -84,25 +84,25 @@ use_collision = true
 [node name="OuterWalls" type="Node3D" parent="NavigationRegion3D2/Map"]
 
 [node name="Wall" type="CSGBox3D" parent="NavigationRegion3D2/Map/OuterWalls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -25)
+transform = Transform3D(1, 0, 0, 0, 2.7, 0, 0, 0, 1, 0, 1.00485, -25)
 material_override = SubResource("StandardMaterial3D_lgkyn")
 use_collision = true
 size = Vector3(50, 2, 1)
 
 [node name="Wall2" type="CSGBox3D" parent="NavigationRegion3D2/Map/OuterWalls"]
-transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 1, 25)
+transform = Transform3D(0.999999, 0, 0, 0, 2.7, 0, 0, 0, 0.999999, 0, 1.00485, 25)
 material_override = SubResource("StandardMaterial3D_lgkyn")
 use_collision = true
 size = Vector3(50, 2, 1)
 
 [node name="Wall3" type="CSGBox3D" parent="NavigationRegion3D2/Map/OuterWalls"]
-transform = Transform3D(-4.37114e-08, 0, 0.999999, 0, 1, 0, -0.999999, 0, -4.37114e-08, -25, 1, 0)
+transform = Transform3D(-4.37114e-08, 0, 0.999999, 0, 2.7, 0, -0.999999, 0, -4.37114e-08, -25, 1.00485, 0)
 material_override = SubResource("StandardMaterial3D_lgkyn")
 use_collision = true
 size = Vector3(50, 2, 1)
 
 [node name="Wall4" type="CSGBox3D" parent="NavigationRegion3D2/Map/OuterWalls"]
-transform = Transform3D(-4.37114e-08, 0, 0.999999, 0, 1, 0, -0.999999, 0, -4.37114e-08, 25, 1, 0)
+transform = Transform3D(-4.37114e-08, 0, 0.999999, 0, 2.7, 0, -0.999999, 0, -4.37114e-08, 25, 1.00485, 0)
 material_override = SubResource("StandardMaterial3D_lgkyn")
 use_collision = true
 size = Vector3(50, 2, 1)
@@ -110,103 +110,103 @@ size = Vector3(50, 2, 1)
 [node name="InnerWalls" type="Node3D" parent="NavigationRegion3D2/Map"]
 
 [node name="InnerWall" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(0.2, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 1, -0.505945)
+transform = Transform3D(0.2, 0, 0, 0, 2.7, 0, 0, 0, 1, -19.5, 1.00485, -0.505945)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(50, 2, 1)
 
 [node name="InnerWall10" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(-0.0500001, 0, 0, 0, 1, 0, 0, 0, 2.652, -0.00750065, 0.94006, -0.00594521)
+transform = Transform3D(-0.0500001, 0, 0, 0, 2.7, 0, 0, 0, 2.652, -0.00750065, 0.843014, -0.00594521)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(320.5, 2, 1)
 
 [node name="InnerWall9" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(0.2, 0, 0, 0, 1, 0, 0, 0, 1, -19.5205, 1, 16.486)
+transform = Transform3D(0.2, 0, 0, 0, 2.7, 0, 0, 0, 1, -19.5205, 1.00485, 16.486)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(50, 2, 1)
 
 [node name="InnerWall3" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(-8.74227e-09, 0, 1, 0, 1, 0, -0.2, 0, -4.37114e-08, -15.9, 1, -15.2059)
+transform = Transform3D(-8.74227e-09, 0, 1, 0, 2.7, 0, -0.2, 0, -4.37114e-08, -15.9, 1.00485, -15.2059)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(50, 2, 1)
 
 [node name="InnerWall7" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(-8.74227e-09, 0, 1, 0, 1, 0, -0.2, 0, -4.37114e-08, -8.5, 1, 16.1941)
+transform = Transform3D(-8.74227e-09, 0, 1, 0, 2.7, 0, -0.2, 0, -4.37114e-08, -8.5, 1.00485, 16.1941)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(50, 2, 1)
 
 [node name="InnerWall8" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(-6.11959e-09, 0, 1, 0, 1, 0, -0.14, 0, -4.37114e-08, -15.5, 1, 6.69406)
+transform = Transform3D(-6.11959e-09, 0, 1, 0, 2.7, 0, -0.14, 0, -4.37114e-08, -15.5, 1.00485, 6.69406)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(50, 2, 1)
 
 [node name="InnerWall2" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(0.2, 0, 0, 0, 1, 0, 0, 0, 1, -15.1, 1, -9.70595)
+transform = Transform3D(0.2, 0, 0, 0, 2.7, 0, 0, 0, 1, -15.1, 1.00485, -9.70595)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(94, 2, 1)
 
 [node name="InnerWall6" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(0.2, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, 10.6941)
+transform = Transform3D(0.2, 0, 0, 0, 2.7, 0, 0, 0, 1, -10, 1.00485, 10.6941)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(94, 2, 1)
 
 [node name="InnerWall4" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(-8.74227e-09, 0, 1, 0, 1, 0, -0.2, 0, -4.37114e-08, -9.53674e-07, 1, -15.1059)
+transform = Transform3D(-8.74227e-09, 0, 1, 0, 2.7, 0, -0.2, 0, -4.37114e-08, -9.53674e-07, 1.00485, -15.1059)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(94, 2, 1)
 
 [node name="InnerWall5" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(-8.74227e-09, 0, 1, 0, 1, 0, -0.2, 0, -4.37114e-08, -0.100001, 1, 15.0941)
+transform = Transform3D(-8.74227e-09, 0, 1, 0, 2.7, 0, -0.2, 0, -4.37114e-08, -0.100001, 1.00485, 15.0941)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(94, 2, 1)
 
 [node name="InnerWall11" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(-0.2, 0, -8.74227e-08, 0, 1, 0, 1.74845e-08, 0, -1, 19.4667, 1, 0.505166)
+transform = Transform3D(-0.2, 0, -8.74227e-08, 0, 2.7, 0, 1.74845e-08, 0, -1, 19.4667, 1.00485, 0.505166)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(50, 2, 1)
 
 [node name="InnerWall12" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(-0.2, 0, -8.74227e-08, 0, 1, 0, 1.74845e-08, 0, -1, 19.4667, 1, -16.5948)
+transform = Transform3D(-0.2, 0, -8.74227e-08, 0, 2.7, 0, 1.74845e-08, 0, -1, 19.4667, 1.00485, -16.5948)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(50, 2, 1)
 
 [node name="InnerWall13" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(2.62268e-08, 0, -1, 0, 1, 0, 0.2, 0, 1.31134e-07, 15.8667, 1, 15.2052)
+transform = Transform3D(2.62268e-08, 0, -1, 0, 2.7, 0, 0.2, 0, 1.31134e-07, 15.8667, 1.00485, 15.2052)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(50, 2, 1)
 
 [node name="InnerWall14" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(2.62268e-08, 0, -1, 0, 1, 0, 0.2, 0, 1.31134e-07, 8.46666, 1, -16.1948)
+transform = Transform3D(2.62268e-08, 0, -1, 0, 2.7, 0, 0.2, 0, 1.31134e-07, 8.46666, 1.00485, -16.1948)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(50, 2, 1)
 
 [node name="InnerWall15" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(1.83588e-08, 0, -1, 0, 1, 0, 0.14, 0, 1.31134e-07, 15.4667, 1, -6.69483)
+transform = Transform3D(1.83588e-08, 0, -1, 0, 2.7, 0, 0.14, 0, 1.31134e-07, 15.4667, 1.00485, -6.69483)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(50, 2, 1)
 
 [node name="InnerWall16" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(-0.2, 0, -8.74227e-08, 0, 1, 0, 1.74845e-08, 0, -1, 15.0667, 1, 9.70517)
+transform = Transform3D(-0.2, 0, -8.74227e-08, 0, 2.7, 0, 1.74845e-08, 0, -1, 15.0667, 1.00485, 9.70517)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(94, 2, 1)
 
 [node name="InnerWall17" type="CSGBox3D" parent="NavigationRegion3D2/Map/InnerWalls"]
-transform = Transform3D(-0.2, 0, -8.74227e-08, 0, 1, 0, 1.74845e-08, 0, -1, 9.96667, 1, -10.6948)
+transform = Transform3D(-0.2, 0, -8.74227e-08, 0, 2.7, 0, 1.74845e-08, 0, -1, 9.96667, 1.00485, -10.6948)
 material_override = SubResource("StandardMaterial3D_25lsv")
 use_collision = true
 size = Vector3(94, 2, 1)
@@ -216,7 +216,7 @@ size = Vector3(94, 2, 1)
 [node name="PointOfInterest" parent="NavigationRegion3D2/Map/PointsOfInterest" instance=ExtResource("7_gd3uj")]
 
 [node name="PointOfInterest16" parent="NavigationRegion3D2/Map/PointsOfInterest" instance=ExtResource("7_gd3uj")]
-transform = Transform3D(1, 0, 0, 0, 0.00250001, 0, 0, 0, 1, -12, 0, -12.9)
+transform = Transform3D(1, 0, 0, 0, 0.00250001, 0, 0, 0, 1, -12, 0, -16.9895)
 skeleton = NodePath("")
 
 [node name="PointOfInterest15" parent="NavigationRegion3D2/Map/PointsOfInterest" instance=ExtResource("7_gd3uj")]
@@ -228,7 +228,7 @@ transform = Transform3D(1, 0, 0, 0, 0.00250001, 0, 0, 0, 1, -20.1, 0, 20.8)
 skeleton = NodePath("")
 
 [node name="PointOfInterest17" parent="NavigationRegion3D2/Map/PointsOfInterest" instance=ExtResource("7_gd3uj")]
-transform = Transform3D(1, 0, 0, 0, 0.00250001, 0, 0, 0, 1, -20.4, 0, -13.3)
+transform = Transform3D(1, 0, 0, 0, 0.00250001, 0, 0, 0, 1, -20.4, 0, -18.4926)
 skeleton = NodePath("")
 
 [node name="PointOfInterest18" parent="NavigationRegion3D2/Map/PointsOfInterest" instance=ExtResource("7_gd3uj")]
@@ -244,15 +244,15 @@ transform = Transform3D(1, 0, 0, 0, 0.00250001, 0, 0, 0, 1, 0, 0, 3.3)
 skeleton = NodePath("")
 
 [node name="PointOfInterest21" parent="NavigationRegion3D2/Map/PointsOfInterest" instance=ExtResource("7_gd3uj")]
-transform = Transform3D(1, 0, 0, 0, 0.00250001, 0, 0, 0, 1, 4.4, 0, -13.5)
+transform = Transform3D(1, 0, 0, 0, 0.00250001, 0, 0, 0, 1, 3.30048, 0, -18.8728)
 skeleton = NodePath("")
 
 [node name="PointOfInterest22" parent="NavigationRegion3D2/Map/PointsOfInterest" instance=ExtResource("7_gd3uj")]
-transform = Transform3D(1, 0, 0, 0, 0.00250001, 0, 0, 0, 1, 20.9, 0, -20.8)
+transform = Transform3D(1, 0, 0, 0, 0.00250001, 0, 0, 0, 1, 20.9, 0, -22.7037)
 skeleton = NodePath("")
 
 [node name="PointOfInterest23" parent="NavigationRegion3D2/Map/PointsOfInterest" instance=ExtResource("7_gd3uj")]
-transform = Transform3D(1, 0, 0, 0, -0.0500001, 0, 0, 0, 1, 20.8, 0, -13.6)
+transform = Transform3D(1, 0, 0, 0, -0.0500001, 0, 0, 0, 1, 21.6219, 0, -10.4744)
 
 [node name="PointOfInterest24" parent="NavigationRegion3D2/Map/PointsOfInterest" instance=ExtResource("7_gd3uj")]
 transform = Transform3D(1, 0, 0, 0, 0.00250001, 0, 0, 0, 1, 21, 0, 5.4)
@@ -277,6 +277,7 @@ _coinScene = ExtResource("8_2bawt")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CoinManager"]
 stream = ExtResource("9_6sibd")
+volume_db = 10.0
 
 [node name="Enemies" type="Node3D" parent="."]
 
@@ -341,5 +342,5 @@ text = "0
 fit_content = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.453991, 0.891007, 0, -0.891007, 0.453991, 0, 35.042, 24.555)
+transform = Transform3D(1, 0, 0, 0, 0.453991, 0.891007, 0, -0.891007, 0.453991, 0, 36.472, 23.925)
 fov = 59.5
